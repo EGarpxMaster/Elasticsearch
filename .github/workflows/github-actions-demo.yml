@@ -1,0 +1,40 @@
+name: GitHub Actions Demo
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          pip install pandas matplotlib seaborn
+
+      - name: Run Python script
+        run: python python.py 
+
+      - name: Commit and Push JSON & Graph
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Update JSON and Graph"
+          commit_user_name: "Kary Miranda [GitHub Actions]"
+          commit_user_email: "kary0508miranda@gmail.com"
+          commit_author: "karyllxx"
+          file_pattern: "docs/datos_spotify.json docs/grafico_spotify.png"
+
+         
