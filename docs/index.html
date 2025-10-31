@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Gráfica de Spotify</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>🎶 Top 10 Canciones por Popularidad en Spotify 🎶</h1>
+    <canvas id="graficoSpotify"></canvas>
+
+    <script>
+        fetch('datos_spotify.json')
+        .then(response => response.json())
+        .then(data => {
+            const nombres = data.map(song => song.track_name);
+            const popularidad = data.map(song => song.track_popularity);
+
+            const ctx = document.getElementById('graficoSpotify').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: nombres,
+                    datasets: [{
+                        label: 'Popularidad',
+                        data: popularidad,
+                        backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    indexAxis: 'y'
+                }
+            });
+        })
+        .catch(error => console.error('Error cargando el JSON:', error));
+    </script>
+</body>
+</html>
